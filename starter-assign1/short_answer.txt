@@ -1,5 +1,3 @@
-Before submitting this file, make sure that there are no more TODO
-placeholders remaining in the file (and remove this comment too).
 
 Perfect Numbers
 ---------------
@@ -11,12 +9,11 @@ Q1. Roughly how long did it take your computer to do the search? How many perfec
 A1. 4 perfect numbers from 0-1000, .013 seconds
 
 Q2. Make a table of the timing results for `findPerfects` that you observed. (old-school table of text rows and columns is just fine)
-Correct (STUDENT_TEST, perfect.cpp:131) Multiple time trials of findPerfects on increasing input sizes
-Line 136 TIME_OPERATION findPerfects(size) (size =1000) completed in 0.013 secs
-Line 136 TIME_OPERATION findPerfects(size) (size =2000)completed in 0.014 secs
 
-
-Line 136 TIME_OPERATION findPerfects(size) (size = Line 136 TIME_OPERATION findPerfects(size) (size = 4000) completed in 0.018 secs 8000) completed in 0.032 secs
+1000 | .013 secs
+2000 | .014 secs
+4000 | .018 secs
+8000 | .032 secs
 
 Q3. Does it take the same amount of work to compute `isPerfect` on the number 10 as it does on the number 1000? Why or why not? Does it take the same amount of work for `findPerfects` to search the range of numbers from 1-1000 as it does to search the numbers from 1000-2000? Why or why not?
 No it does not, 'IsPerfect' calls the divisorSum method, which iterates from 1 to N. The loop will run for longer as N gets bigger ( O(N)), so 1000 will take more work. For the same reasoning, it will take longer to search from 1000-2000 than it will for 1-1000
@@ -27,16 +24,19 @@ Q5. Do any of the tests still pass even with this broken function? Why or why no
 Yes, both tests passed, the loop will make sure that total always incraments to 1 because 0%1 is 0 so the total will incrament to 1.
 
 Q6. Explain your testing strategy for `smarterSum` and how you chose your specific test cases that lead you to be confident the function is working correctly.
-A6. TODO
-
+I first thought about cases that I thought would be not directly the intent of the function, for example, I wanted to make sure that in our loop we didnt double add a square root, because under the base logic the functino would. I also checked values that would have a decimal square root
+this is because N of the loop is that number, and its impossible to iterate a decimal amount of times, so I wanted to make sure that we account for that
 Q7. Record your timing results for `findPerfectsSmarter` into a table.
-A7. TODO
+1000 | .021
+2000 | .034
+4000 | .039
+8000 | .055
 
 Q8. Make a prediction: how long will `findPerfectsSmarter` take to reach the fifth perfect number?
-A8. TODO
-
+It would take 3.817 seconds to find 33,550,336
 Q9. Explain how you chose your specific test cases and why they lead you to be confident `findNthPerfectEuclid` is working correctly.
-A9. TODO
+With,in the bit limit of our long datatypes, I considered all of the cases where it may not work, so I tried 1,2 as it was iteration and I wanted to make sure I set up the loop right. I also considered the largest number within the bit limit.
+
 
 Soundex
 -------
