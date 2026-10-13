@@ -29,16 +29,16 @@ Set<GridLocation> generateValidMoves(Grid<bool>& maze, GridLocation cur) {
         return {};
     }
     if (cur.col > 0){
-    left.col = cur.col - 1;
+        left.col = cur.col - 1;
     }
     if (cur.col < maze.numCols()-1){
-    right.col = cur.col + 1;
+        right.col = cur.col + 1;
     }
     if (cur.row > 0) {
-    down.row = cur.row - 1;
+        down.row = cur.row - 1;
     }
     if (cur.row < maze.numRows()-1) {
-    up.row = cur.row + 1;
+        up.row = cur.row + 1;
     }
     down.col = cur.col, up.col = cur.col, left.row = cur.row, right.row = cur.row;
     if (maze[left] == true && cur.col > 0) {
@@ -57,8 +57,9 @@ Set<GridLocation> generateValidMoves(Grid<bool>& maze, GridLocation cur) {
     return neighbors;
 }
 
-// TODO: Add a function header comment here to explain the
-// behavior of the function and how you implemented this behavior
+// The "validatePath function takes in a passed by value grid of booleans(the maze) and a vector of gridlocations called path. It computes if a given path is valid for a given maze. if it is not it returns an error
+// it checks if path is empty, if the start point is not at 0,0, if the end is not at the end ( maxX-1, MaxY-1), if any of the points on the path are obstructed, or if any moves are invalid. If any of these cases are true
+// than the respective error is returned.
 void validatePath(Grid<bool>& maze, Vector<GridLocation>& path) {
     if (path.isEmpty()) {
         error("Path is empty!");
@@ -79,13 +80,8 @@ void validatePath(Grid<bool>& maze, Vector<GridLocation>& path) {
             error("The path contains an invalid move");
         }
     }
-    }
-    /* TODO: Fill in the remainder of this function. */
+}
 
-    /* If you find a problem with the path, call error() to report it.
-     * If the path is a valid solution, then this function should run to completion
-     * without raising any errors.
-     */
 
 
 // the solveMazeBfs function takes in a maze(grid) of booleans which are obstructious and uses a queue to implament a breadth first search
@@ -254,6 +250,238 @@ PROVIDED_TEST("generateValidMoves on corner of 2x2 grid with walls") {
     EXPECT_EQUAL(generateValidMoves(maze, corner), expected);
 }
 
+
+PROVIDED_TEST("validatePath on correct solution read from file, medium maze") {
+    Grid<bool> maze;
+    Vector<GridLocation> soln;
+    readMazeFile("res/5x7.maze", maze);
+    readSolutionFile("res/5x7.soln", soln);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+PROVIDED_TEST("validatePath on invalid path should raise error") {
+    Grid<bool> maze = {{true, false},
+                       {true, true},
+                       {true, true}};
+    Vector<GridLocation> notBeginAtEntry = { {1, 1}, {2, 1} };
+    Vector<GridLocation> notEndAtExit = { {0, 0}, {1, 0}, {2, 0} };
+    Vector<GridLocation> moveThroughWall = { {0 ,0}, {0, 1}, {1, 1}, {2, 1} };
+
+    EXPECT_ERROR(validatePath(maze, notBeginAtEntry));
+    EXPECT_ERROR(validatePath(maze, notEndAtExit));
+    EXPECT_ERROR(validatePath(maze, moveThroughWall));
+}
+//TESTING ON PROVIDED TEST FILES
+PROVIDED_TEST("solveMazeBFS on file 5x7") {
+    Grid<bool> maze;
+    readMazeFile("res/5x7.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+PROVIDED_TEST("solveMazeDFS on file 21x23") {
+    Grid<bool> maze;
+    readMazeFile("res/21x23.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 2x2") {
+    Grid<bool> maze;
+    readMazeFile("res/2x2.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 5x7") {
+    Grid<bool> maze;
+    readMazeFile("res/5x7.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 13x39") {
+    Grid<bool> maze;
+    readMazeFile("res/13x39.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 17x37") {
+    Grid<bool> maze;
+    readMazeFile("res/17x37.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 19x35") {
+    Grid<bool> maze;
+    readMazeFile("res/19x35.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 21x23") {
+    Grid<bool> maze;
+    readMazeFile("res/21x23.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+
+STUDENT_TEST("solveMazeBFS on file 21x25") {
+    Grid<bool> maze;
+    readMazeFile("res/21x25.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 21x35") {
+    Grid<bool> maze;
+    readMazeFile("res/21x35.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 25x15") {
+    Grid<bool> maze;
+    readMazeFile("res/25x15.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 25x33") {
+    Grid<bool> maze;
+    readMazeFile("res/25x33.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeBFS on file 33x41") {
+    Grid<bool> maze;
+    readMazeFile("res/33x41.maze", maze);
+    Vector<GridLocation> soln = solveMazeBFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+PROVIDED_TEST("solveMazeDFS on file 5x7") {
+    Grid<bool> maze;
+    readMazeFile("res/5x7.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+PROVIDED_TEST("solveMazeDFS on file 21x23") {
+    Grid<bool> maze;
+    readMazeFile("res/21x23.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 2x2") {
+    Grid<bool> maze;
+    readMazeFile("res/2x2.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 5x7") {
+    Grid<bool> maze;
+    readMazeFile("res/5x7.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 13x39") {
+    Grid<bool> maze;
+    readMazeFile("res/13x39.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 17x37") {
+    Grid<bool> maze;
+    readMazeFile("res/17x37.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 19x35") {
+    Grid<bool> maze;
+    readMazeFile("res/19x35.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 21x23") {
+    Grid<bool> maze;
+    readMazeFile("res/21x23.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+
+STUDENT_TEST("solveMazeDFS on file 21x25") {
+    Grid<bool> maze;
+    readMazeFile("res/21x25.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 21x35") {
+    Grid<bool> maze;
+    readMazeFile("res/21x35.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 25x15") {
+    Grid<bool> maze;
+    readMazeFile("res/25x15.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 25x33") {
+    Grid<bool> maze;
+    readMazeFile("res/25x33.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+
+STUDENT_TEST("solveMazeDFS on file 33x41") {
+    Grid<bool> maze;
+    readMazeFile("res/33x41.maze", maze);
+    Vector<GridLocation> soln = solveMazeDFS(maze);
+
+    EXPECT_NO_ERROR(validatePath(maze, soln));
+}
+// TODO: add your test cases here
 //STUDENT TESTS
 STUDENT_TEST("generateValidMoves on 3x3 grid center with obstruction"){
 
@@ -304,7 +532,7 @@ STUDENT_TEST("validatePath rejects an empty path") {
     EXPECT_ERROR(validatePath(maze, path));
 }
 
-STUDENT_TEST("validatePath rejects incorrect start or end") {
+STUDENT_TEST("validatePath throws error on incorrect start or end") {
     Grid<bool> maze = {
         {true, true},
         {true, true}
@@ -335,16 +563,16 @@ STUDENT_TEST("BFS solves a single square maze") {
 
 }
 STUDENT_TEST("BFS finds correct path ( only one soloution in this set)") {
-        Grid<bool> maze = {
-            {true,  true,  false},
-            {false, true,  false},
-            {false, true,  true}
-        };
-        Vector<GridLocation> expected = {
-            {0, 0}, {0, 1}, {1, 1}, {2, 1}, {2, 2}
-        };
+    Grid<bool> maze = {
+        {true,  true,  false},
+        {false, true,  false},
+        {false, true,  true}
+    };
+    Vector<GridLocation> expected = {
+        {0, 0}, {0, 1}, {1, 1}, {2, 1}, {2, 2}
+    };
 
-        EXPECT_EQUAL(solveMazeBFS(maze), expected);
+    EXPECT_EQUAL(solveMazeBFS(maze), expected);
 }
 STUDENT_TEST("BFS finds path in maze with loops/open maze") {
     Grid<bool> maze = {
@@ -358,7 +586,7 @@ STUDENT_TEST("BFS finds path in maze with loops/open maze") {
     EXPECT_NO_ERROR(validatePath(maze, soln));
     EXPECT_EQUAL(soln.size(), 5);
 }
-STUDENT_TEST("BFS returns empty with no way to exit"){
+STUDENT_TEST("BFS returns empty when there is no way to exit"){
     Grid<bool> maze = {
         {true,  true,  false},
         {true,  true,  false},
@@ -414,42 +642,3 @@ STUDENT_TEST("DFS returns empty with no way to exit"){
 
     EXPECT(solveMazeDFS(maze).isEmpty());
 }
-PROVIDED_TEST("validatePath on correct solution read from file, medium maze") {
-    Grid<bool> maze;
-    Vector<GridLocation> soln;
-    readMazeFile("res/5x7.maze", maze);
-    readSolutionFile("res/5x7.soln", soln);
-
-    EXPECT_NO_ERROR(validatePath(maze, soln));
-}
-
-PROVIDED_TEST("validatePath on invalid path should raise error") {
-    Grid<bool> maze = {{true, false},
-                       {true, true},
-                       {true, true}};
-    Vector<GridLocation> notBeginAtEntry = { {1, 1}, {2, 1} };
-    Vector<GridLocation> notEndAtExit = { {0, 0}, {1, 0}, {2, 0} };
-    Vector<GridLocation> moveThroughWall = { {0 ,0}, {0, 1}, {1, 1}, {2, 1} };
-
-    EXPECT_ERROR(validatePath(maze, notBeginAtEntry));
-    EXPECT_ERROR(validatePath(maze, notEndAtExit));
-    EXPECT_ERROR(validatePath(maze, moveThroughWall));
-}
-
-PROVIDED_TEST("solveMazeBFS on file 5x7") {
-    Grid<bool> maze;
-    readMazeFile("res/5x7.maze", maze);
-    Vector<GridLocation> soln = solveMazeBFS(maze);
-
-    EXPECT_NO_ERROR(validatePath(maze, soln));
-}
-
-PROVIDED_TEST("solveMazeDFS on file 21x23") {
-    Grid<bool> maze;
-    readMazeFile("res/21x23.maze", maze);
-    Vector<GridLocation> soln = solveMazeDFS(maze);
-
-    EXPECT_NO_ERROR(validatePath(maze, soln));
-}
-
-// TODO: add your test cases here
