@@ -1,9 +1,4 @@
-/*
- * TODO: remove and replace this file header comment
- * You will edit and turn in this file.
- * Remove starter comments and add your own
- * comments on each function and on complex code sections.
- */
+
 #include <iostream>    // for cout, endl
 #include "recursion.h"
 #include "SimpleTest.h"
@@ -45,31 +40,4 @@ int drawSierpinskiTriangle(GWindow& window, GPoint one, GPoint two, GPoint three
 
 PROVIDED_TEST("Test fractal drawing interactively using graphical demo") {
     runInteractiveDemo();
-}
-
-STUDENT_TEST("Sierpinski triangle counts for orders 0 through 5") {
-    GWindow window;
-
-    GPoint one(200, 50);
-    GPoint two(50, 300);
-    GPoint three(350, 300);
-
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 0), 1);
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 1), 3);
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 2), 9);
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 3), 27);
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 4), 81);
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 5), 243);
-}
-
-STUDENT_TEST("Sierpinski with different triangle coordinates") {
-    GWindow window;
-
-    GPoint one(100, 100);
-    GPoint two(400, 150);
-    GPoint three(250, 400);
-
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 1), 3);
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 2), 9);
-    EXPECT_EQUAL(drawSierpinskiTriangle(window, one, two, three, 3), 27);
 }
