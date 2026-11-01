@@ -3,49 +3,53 @@ placeholders remaining in the file (and remove this comment too).
 
 Warmup
 ------
+Q1. What is the value of `totalMoves` after stepping over the call to `moveTower` in `hanoiAnimation`?
+A1. TODO
 
-Q1. Looking at a call stack listing in a debugger, what is the indication that the program being debugged uses recursion?
-We know it is using recursion because the address of the calls are the same and n goes down for each call.
+Q2. What is the value of the `totalMoves` variable after stepping over the first recursive sub-call?
+(In other words, within `moveTower` and just after stepping over the first recursive sub-call
+to `moveTower` inside the `else` statement.)
+A2. TODO
 
-Q2. Subtract the innermost level number from the outermost to get the maximum count of stack frames that fit in the capacity of the call stack. How many stack frames fit in your system's call stack?
-16677
+Q3. After breaking at the base case of `moveTower` and then choosing Step Out, where do you end up?
+(What function are you in, and at what line number?)
+What is the value of the `totalMoves` variable at this point?
+A3. TODO
 
-Q3. Describe how the symptoms of infinite recursion differ from the symptoms of an infinite loop.
-A3. infinate recursion causes a stack overflow, as new stacks would keep being created as the program calls itself. an infinate loop would not create new stacks it would just keep iterating and the program would seem to have paused.
-
-Q4. In place of selecting values over a defined range, an alternate approach would be to randomly select values for base and exponent. Such a test case would test something different each time you ran it. This test approach is part of a larger approach known as "fuzz" testing. What do you see as possible benefit and downside of randomness being used in a test case?
+Q4. What is the smallest possible input that you used to trigger the bug in the program?
 A4. TODO
 
-Q5. What was the number of iterations of `recPower` did it take on your system to amount to a quarter second? Copy/paste the time results of the two time trial sequences running on that number of iterations.
+Q5. Identify the one-character error in the code and explain why that bug causes the function
+to return the output you see when running on the minimal input you listed above.
+You should be able to specifically account for how the error causes the result to
+change from “completely correct” to “terribly wrong.”
 A5. TODO
 
-Q6. Explain how the recursive structure of `recPower` results in a Big-O runtime of `O(lgN)` relative to the size of its `exp` argument.
-A6. TODO
+Marbles
+-------
+Q6. How much time does our visited boards tracking save us? Run the solver on the "half-done" board in the res folder and
+note at the bottom of the screen how many boards it said it tried.
+Now comment-out your code that skips already-visited boards and run the experiment again. Give the two counts
+and explain the results. Would you expect the percentage gap between the two counts to be same/greater/less if
+you re-run this experiment starting with the whole board? (try it if you dare!)
+
+With visited-board tracking, the solver explored 1,742 boards in 8 ms. Without visited-board tracking, it explored 21,364 boards in 100 ms. So a 91.85% reduction in boards explored.
+
+By tracking previously explored unsuccessful configurations, the solver can  avoid exploring the same branches repeatedly.
+
+I would expect the percentage reduction to generally be greater with the full board because there are more possible move sequences and more opportunities to reach the same configuration through different paths. But, this is not neccicarily true because the solver stops as soon as it finds a solution.
 
 
-Balanced
---------
+Q7. What edit would you need to make to change the code to apply the traditional rule that the game is only won if the last remaining marble lands in the center spot? (our version lets it land anywhere) Describe exactly where the change would be made, and what it would be.
+I would modify the isSolved() function in the MarbleBoard class to check that there is exactly one marble remaining and that the center square (BOARD_CENTER) is occupied. This would require adding _grid[BOARD_CENTER] == MARBLE_OCCUPIED to the existing condition. The recursive solver would not need to change because it already uses board.isSolved() as its base case.
+Redistrict
+----------
+Q8. A leader of a political party in your hometown learns you just took CS106B.
+They offer you a job working on cutting-edge software that applies algorithms to optimize
+gerrymandering during the process of redistricting.
 
-Q7. Compare your recursive solution to the iterative approach used for the Check Balance problem in [Section 1][section1]. Which version do you find easier to read and understand? In which version did you find it easier to confirm the correct behavior?
-A7. TODO
+What questions might you ask about this job before making a decision? What might be the drawbacks?
+Which communities would be affected by the work you're doing?
 
-Merge
------
-
-Q8. Give a rough estimate of the maximum length sequence that could be successfully merged on your system assuming a recursive implementation of `binaryMerge`.
+Please write your list of 3-5 questions and be sure to include ethical considerations.
 A8. TODO
-
-Q9. What would be the observed behavior if attempting to recursively merge a sequence larger than that maximum?
-A9. TODO
-
-Q10. Include the data from your execution timing and explain how it supports your Big O prediction for `binaryMerge`.
-A10. TODO
-
-Q11. Include the data from your execution timing and explain how it supports your Big O prediction for `naiveMultiMerge`.
-A11. TODO
-
-Q12. Include the data from your execution timing and explain how it demonstrates `O(n log k)` runtime for `recMultiMerge`.
-A12. TODO
-
-Q13. You run `recMultiMerge` on a sequence of size 1 million and see that it completes just fine. Explain why this is not running afoul of the call stack capacity limitation.  _Hint_: How many stack frames (levels) are expected to be on the call stack at the deepest point in the recursion in `recMultiMerge`?
-A13. TODO
