@@ -1,0 +1,39 @@
+Q1:
+The id of allBalls[0] stays constant(0). Its _x and _y values change each iteration based on the velocities _vx and _vy. In the debugger, I saw that  _x = 382, _y = 573, _vx = -5, and _vy = 5. This means the ball moves 5 pixels left and 5 pixels down per iteration until it reaches a boundary, at which point the velocity because the negative of that velocity .
+
+
+
+Q2:
+
+
+For the stuck ball (ID 7), x increased normally by 5 each iteration, but y alternated between 717 and 722. Its vertical velocity _vy repeatedly switched between +5 and -5, so the ball was vibrating in place vertically rather than bouncing normally. Unlike a normal ball, which reverses direction and moves away from a boundary,
+this ball remained outside the valid boundary and kept reversing its velocity.
+
+Q3:
+
+After changing Ball 7's x and _y coordinates to 0, the ball started moving normally again instead of getting stuck at the boundary. The problem was that the ball had been initialized outside the window. Since the code only reverses velocity without correcting position, the ball could repeatedly reverse direction while remaining outside the boundary.
+
+To fix this, we should make it so that  that the ball's initial coordinates are within the allowed bounds, accounting for the ball's width and height .
+
+
+Q4:
+
+
+
+
+Q5:
+
+
+
+
+Q6:
+
+
+
+
+Q7:
+
+
+
+
+
